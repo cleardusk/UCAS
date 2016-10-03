@@ -16,8 +16,6 @@ python ucas.py -D login
 
 # logout
 python ucas.py -D logout
-# or
-python ucas.py -D logout
 ```
 
 I wrote it using Python 2.x, but the code works in Python 3.x too.
