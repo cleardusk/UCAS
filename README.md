@@ -26,3 +26,15 @@ I wrote it using Python 2.x, but the code works in Python 3.x too.
 Welcome for more contributors...
 
 Welcome to contact me about things in Python, coding and so on...
+
+## Linux
+If you are using the linux distribution based on Ubuntu, a convenient method to auto connect specific wifi follows:
+```
+nmcli c
+nmcli c up uuid <paste uuid here>
+```
+
+I work on Mint, my login pipline is like this
+```
+nmcli c up uuid a0df920b-9ad2-460a-b690-5163d9b2b099 && ucas.py -D login
+```
