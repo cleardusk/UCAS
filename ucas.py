@@ -3,13 +3,8 @@
 
 import requests
 import json
-import random
 import argparse
 import os
-
-LOGIN_HAS_FLOW = 0
-LOGIN_NO_FLOW = 1
-LOGIN_FAIL = 2  # user not exists, password wrong and so on.
 
 
 class Ucas:
@@ -23,10 +18,6 @@ class Ucas:
         message = r.get('message')
         if not message:
             message = u'登陆成功！'
-        # if self.user_id is None:
-        #     return u'{}, {}'.format(result, message)
-        # else:
-        #     return u'{}: {}, {}'.format(self.user_id, result, message)
         return u'{}: {}'.format(result, message)
 
     def _operation(self, method):
@@ -56,11 +47,7 @@ class Ucas:
             print(self.parse_res(r))
         elif method in ['getOnlineUserInfo']:
             r = self.session.post(url=url)
-            print(r.content)
-            # r = json.loads(r.content)
-            # json.dump(r, open('info.json', 'w'),indent=True)
-            # print(json.dumps(r, indent=True))
-            # print(r)
+            print(r.content.decode('utf-8'))
         else:
             print('method {} is NOT supported'.format(method))
 
@@ -74,20 +61,8 @@ class Ucas:
         self._operation('getOnlineUserInfo')
 
 
-def test_valid():
-    user_ids = json.load(open('user_ids.json'))
-    valid = {}
-    for user_id, user_name in user_ids.iteritems():
-        ucas = Ucas(user_id=user_id, password='ucas')
-        if ucas.login():
-            ucas.logout()
-            valid[user_id] = user_name
-
-    json.dump(valid, open('user_ids2.json', 'w'), indent=True)
-
-
 def main():
-    parser = argparse.ArgumentParser(description='ucas tools')
+    parser = argparse.ArgumentParser(description='ucas utils')
     parser.add_argument('-D', '--do', type=str, default='login')
     args = parser.parse_args()
 
@@ -102,4 +77,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # test_valid()
