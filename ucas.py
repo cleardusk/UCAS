@@ -43,7 +43,7 @@ class Ucas:
             return False
         elif method in ['logout']:
             r = self.session.post(url=url)
-            r = json.loads(r.content)
+            r = json.loads(r.content.decode('utf-8'))
             print(self.parse_res(r))
         elif method in ['getOnlineUserInfo']:
             r = self.session.post(url=url)
