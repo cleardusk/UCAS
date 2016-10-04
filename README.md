@@ -5,23 +5,41 @@ library.
 More features will be added if time and energy permits.
 
 # Usage
-First, you should add your id and password in config.json, the id is your student number, the password is the last six 
-character of your personal ID card number.
+Now the script support UCAS/Wireless and ChinaUnicom!
+## UCAS
+First, you should add your id and password in config.json, the id is your student number, the initial password is the last six 
+characters of your personal ID card number. And follows
 
 ```
 # login
 python ucas.py
 # or
 python ucas.py -D login
+# or the complete command: D is action, C is config, O is option
+python ucas.py -D login -C config.json -O ucas
 
 # logout
 python ucas.py -D logout
 ```
 
+## ChinaUnicom
+Similar to UCAS, user id is your phone number, and the password is six digit number initially
+```
+# login, complte command
+python ucas.oy -D on -C config.json -O cu
+# shortest command
+python ucas.py -O cu
+
+# logout, shortest command
+python -D logout -O cu
+```
+
+You can change the command order or name if you spend a little time to dive into the code.
+
 I wrote it using Python 2.x, but the code works in Python 3.x too.
 
 # More
-Welcome for more contributors...
+If the code helps you in any way, please share it with more people who need. You can also star to support me~
 
 Welcome to contact me about things in Python, coding and so on...
 
