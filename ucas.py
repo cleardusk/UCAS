@@ -51,28 +51,81 @@ class Ucas:
         else:
             print('method {} is NOT supported'.format(method))
 
-    def login(self):
+    def login_ucas(self):
         self._operation('login')
 
-    def logout(self):
+    def logout_ucas(self):
         self._operation('logout')
 
     def info(self):
         self._operation('getOnlineUserInfo')
 
+    # china unicom login
+    def login_cu(self):
+        url = 'http://202.106.46.37/login.do?username={}&password={}' \
+              '&passwordType=6&userOpenAddress=bj&checkbox=0'.format(self.user_id, self.password)
+
+        r = self.session.get(url).content
+        # r = re.findall('"message":"([a-z]+)"', r)[0]
+        pos = r.find('message')
+        r = r[pos + 10:]
+        pos = r.find('"')
+        message = r[:pos]
+        if message == 'success':
+            print(u'登陆成功（联通）！')
+        else:
+            print(message)
+
+    # china unicom logout
+    def logout_cu(self):
+        url = 'http://202.106.46.37/logout.do'
+        try:
+            self.session.get(url, timeout=2)
+            print(u'退出成功（联通）！')
+        except:
+            print(u'退出出错（联通）！检查下之前用户是否在线？')
+
+
+def login(fp, option='ucas'):
+    info = json.load(open(fp))
+    app = Ucas(user_id=info.get('user_id'), password=info.get('password'))
+    if option == 'ucas':
+        app.login_ucas()
+    elif option == 'unicom':
+        app.login_cu()
+
+
+def logout(option='ucas'):
+    app = Ucas()
+    if option == 'ucas':
+        app.logout_ucas()
+    elif option == 'unicom':
+        app.logout_cu()
+
+
+def make_abs_path(fl):
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), fl)
+
 
 def main():
     parser = argparse.ArgumentParser(description='ucas utils')
     parser.add_argument('-D', '--do', type=str, default='login')
+    parser.add_argument('-O', '--option', type=str, default='ucas')
+    parser.add_argument('-C', '--config', type=str, default='config.json')
     args = parser.parse_args()
 
     if args.do.lower() in ['login', 'online', 'on']:
         # get the absolute path of config file
-        fp = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
-        info = json.load(open(fp))
-        Ucas(user_id=info.get('user_id'), password=info.get('password')).login()
+        fp = make_abs_path(args.config)
+        if args.option.lower() in ['ucas']:
+            login(fp, 'ucas')
+        elif args.option.lower() in ['unicom', 'cu']:
+            login(fp, 'unicom')
     elif args.do.lower() in ['logout', 'offline', 'off']:
-        Ucas().logout()
+        if args.option.lower() in ['ucas']:
+            logout('ucas')
+        elif args.option.lower() in ['unicom', 'cu']:
+            logout('unicom')
 
 
 if __name__ == '__main__':
