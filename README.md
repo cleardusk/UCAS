@@ -31,7 +31,7 @@ python ucas.oy -D on -C config.json -O cu
 python ucas.py -O cu
 
 # logout, shortest command
-python -D logout -O cu
+python ucas.py -D logout -O cu
 ```
 
 You can change or simplify the command if you spend a little time to dive into the code.
