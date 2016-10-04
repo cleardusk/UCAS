@@ -65,7 +65,7 @@ class Ucas:
         url = 'http://202.106.46.37/login.do?username={}&password={}' \
               '&passwordType=6&userOpenAddress=bj&checkbox=0'.format(self.user_id, self.password)
 
-        r = self.session.get(url).content
+        r = self.session.get(url).content.decode('utf-8')
         # r = re.findall('"message":"([a-z]+)"', r)[0]
         pos = r.find('message')
         r = r[pos + 10:]
@@ -80,7 +80,7 @@ class Ucas:
     def logout_cu(self):
         url = 'http://202.106.46.37/logout.do'
         try:
-            self.session.get(url, timeout=2)
+            self.session.get(url, timeout=4)
             print(u'退出成功（联通）！')
         except:
             print(u'退出出错（联通）！检查下之前用户是否在线？')

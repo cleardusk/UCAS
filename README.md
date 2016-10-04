@@ -34,7 +34,7 @@ python ucas.py -O cu
 python -D logout -O cu
 ```
 
-You can change the command order or name if you spend a little time to dive into the code.
+You can change or simplify the command if you spend a little time to dive into the code.
 
 I wrote it using Python 2.x, but the code works in Python 3.x too.
 
