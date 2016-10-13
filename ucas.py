@@ -3,7 +3,6 @@
 
 import requests
 import json
-import argparse
 import os
 
 
@@ -74,6 +73,5 @@ def make_abs_path(fl):
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), fl)
 
 if __name__ == '__main__':
-    # main()
     login(make_abs_path('config.json'), 'ucas')
     #login(make_abs_path('config_cu.json'), 'cu')
