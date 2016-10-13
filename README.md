@@ -1,4 +1,6 @@
 # About
+**If you are insterested in QPython running on Android, visit the [android](https://github.com/cleardusk/UCAS/tree/android) branch.**
+
 This is a very simple tool to auto-login on campus network, you can also write it if you know a little about `request`
 library.
 
